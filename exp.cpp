@@ -86,7 +86,6 @@ void rexpn(string r, const char* b, char* res)
 	}
     res[rLen + bLen] = '\0';
 	//4 dot
-	
 	if (dotPos)
 	{
 		int dotCount = r.length() - dotPos;
@@ -97,7 +96,7 @@ void rexpn(string r, const char* b, char* res)
 		}
 	}
 
-	cout << res << endl;
+
 	return;
 }
 
@@ -122,7 +121,7 @@ int main()
 			{
 				rexpn(r, res, res);
 			}
-
+			cout << res << endl;
 		}
 	}
 	return 0;
