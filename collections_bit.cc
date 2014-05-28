@@ -71,6 +71,8 @@ int main()
     int a = 15;
     cout << set_bit2zero(a, 3) << endl;
     cout << a << endl;
+    for(int i = 1; i < 20; i++)
+        cout << i << " " << (i & (-i)) << "\n";
 #endif
     return 0;
 }
