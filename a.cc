@@ -1,3 +1,6 @@
+/**
+ * common header
+ */
 #include <iostream>
 using namespace std;
 
