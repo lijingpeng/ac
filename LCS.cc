@@ -13,7 +13,7 @@ int lcs_length(const char *x, const char *y, int xlen, int ylen, int (*c)[MAX])
     {
         for(j = 1; j <= ylen; ++j)
         {
-            if(x[i - 1] == y[j - 1])
+            if(x[i - 1] == y[j - 1])    // remember array start from 0
                 c[i][j] = c[i - 1][j - 1] + 1;
             else if(c[i - 1][j] >= c[i][j - 1])
                 c[i][j] = c[i - 1][j];
