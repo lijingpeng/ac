@@ -22,6 +22,28 @@ void SortStraightInsert(Type *array, int length)
         }
     }
 }
+
+void BiSortStraightInsert(Type *array, int length)
+{
+    int i, j, tmp;
+    int mid, low, high;
+    for(i = 1; i < length; ++i)
+    {
+        tmp = array[i];
+        low = 0; high = i - 1;
+        while(low <= high)
+        {
+            mid = (low + high) / 2;
+            if(tmp < array[mid])
+                high = mid - 1;
+            else
+                low = mid + 1;
+        }
+        for(j = i - 1; j > high; --j)     //从当前元素向前比较
+            array[j + 1] = array[j];            //前一个元素比当前的大则后移动
+        array[high + 1] = tmp;                     //在适当位置插入当前元素
+    }
+}
 int main()
 {
     int t,s;
@@ -30,7 +52,8 @@ int main()
     for(int i = 0; i < t; i++)
         cin >> a[i];
 
-    SortStraightInsert(a, t);
+    //SortStraightInsert(a, t);
+    BiSortStraightInsert(a, t);
     for(int i = 0; i < t; i++)
         cout << " " << a[i];
     cout << endl;
