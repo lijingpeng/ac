@@ -23,6 +23,7 @@ void union_set(int x, int y)
 {
     x = find_set(x);
     y = find_set(y);
+    if(x == y) return;
     if(ranks[x] > ranks[y])
     {
         parent[y] = x;
