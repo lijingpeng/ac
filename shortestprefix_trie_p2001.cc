@@ -3,6 +3,7 @@
  * 可用于词频的统计
  */
 #include <iostream>
+#include <memory.h>
 #include <cstdio>
 #include <cstdlib>
 using namespace std;
@@ -12,7 +13,7 @@ const char eCh = '\0';
 
 typedef struct TrieNode
 {
-    bool isStr;                             //是不是能形成字符串
+    int count;
     struct TrieNode *next[MAXN];            //儿子节点，多叉树
 }Trie;
 
@@ -30,13 +31,13 @@ void TrieInsert(Trie *root, const char *s)
             {
                 tmp->next[i] = NULL;
             }
-            tmp->isStr = false;
+            tmp->count = 0;
             p->next[*s - sCh] = tmp;
         }
         p = p->next[*s - sCh];
+        p->count++;
         s++;
     }
-    p->isStr = true;
 }
 
 int TrieSearch(Trie *root, const char *s)
@@ -44,10 +45,15 @@ int TrieSearch(Trie *root, const char *s)
     Trie *p = root;
     while(p != NULL && *s != eCh)
     {
+        if(p->count == 1)
+            break;
+
+        printf("%c", *s);
         p = p->next[*s - sCh];
         s++;
     }
-    return (p != NULL && p->isStr == true);
+    printf("\n");
+    return (p != NULL);
 }
 
 void TrieDelete(Trie *root)
@@ -62,33 +68,27 @@ void TrieDelete(Trie *root)
 
 int main()
 {
-    int i, n, m; //n为建立Trie树输入的单词数，m为要查找的单词数 
-    char s[100];
+    int i = 0, m = 0; //n为建立Trie树输入的单词数，m为要查找的单词数 
+    char s[1001][26];
+    memset(s, 0, sizeof(s));
     Trie *root= (Trie *)malloc(sizeof(Trie));
     for(i=0;i<MAXN;i++)
-        root->next[i]=NULL; 
-    root->isStr=false;
-
-    scanf("%d",&n);
-    getchar();
-    for(i=0;i<n;i++)                 //先建立字典树 
+        root->next[i]=NULL;
+    root->count = 0;
+    
+    while(scanf("%s", s[m]) != EOF)
     {
-        scanf("%s",s);
-        TrieInsert(root,s);
+        TrieInsert(root, s[m]);
+        ++m;
     }
 
-    while(scanf("%d",&m)!=EOF)
+    for(int j = 0; j < m; ++j)
     {
-        for(i=0;i<m;i++)                 //查找 
-        {
-            scanf("%s",s);
-            if(TrieSearch(root,s)==1)
-                printf("YES\n");
-            else
-                printf("NO\n");
-        }
-        printf("\n");   
+        printf("%s ", s[j]);
+        TrieSearch(root, s[j]);
     }
+
+    printf("\n");   
     TrieDelete(root);                         //释放空间很重要 
     return 0;
 }
