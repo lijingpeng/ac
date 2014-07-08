@@ -59,6 +59,22 @@ void swap(int *a, int *b)
     (*a) ^= (*b);
 }
 
+/* 统计一个数字的二进制表示中1的个数
+ * 原理：把一个整数减去1,再和原整数做与运算，会把最右边的1变成0
+ * 例如1100-1=1011, 1100&1011=1000
+ * 时间复杂度：有多少1就进行多少次这样的操作
+ */
+int countone(int n)
+{
+    int count = 0;
+    while(n)
+    {
+        ++count;
+        n = (n - 1) & n;
+    }
+    return count;
+}
+
 int main()
 {
 #ifdef DEBUG_BIT
